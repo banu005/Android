@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,19 +21,67 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+
 
 @Composable
     fun mooveApp() {
-    PageAccueil(
+//    PageAccueil(
+//        modifier = Modifier
+//            .fillMaxSize()
+//            .wrapContentSize(Alignment.Center)
+//    )
+
+    val navController = rememberNavController()
+    NavHost(
+        navController = navController,
+        startDestination = mooveScreen.Start.name,
         modifier = Modifier
-            .fillMaxSize()
-            .wrapContentSize(Alignment.Center)
-    )
+    ) {
+        composable(route = mooveScreen.Start.name) {
+            PageAccueil(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .wrapContentSize(Alignment.Center),
+                navController = navController
+            )
+        }
+        composable(route = mooveScreen.Login.name) {
+            FormulaireLogin(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .wrapContentSize(Alignment.Center),
+                navController = navController
+            )
+        }
+        composable(route = mooveScreen.AfficherCours.name) {
+            ListeCours(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .wrapContentSize(Alignment.Center),
+                navController = navController
+            )
+        }
+
+    }
 }
 
-    @Composable
-    fun PageAccueil(modifier: Modifier = Modifier) {
-//        Text("hello")
+fun ListeCours(modifier: Modifier, navController: NavHostController) {
+
+}
+
+fun FormulaireLogin(modifier: Modifier, navController: NavHostController) {
+
+}
+
+@Composable
+    fun PageAccueil(
+        modifier: Modifier = Modifier,
+        navController: NavHostController = rememberNavController()
+    ) {
         val imageModifier = Modifier
             .size(200.dp)
             .clip(RoundedCornerShape(16.dp))
@@ -53,13 +102,21 @@ import androidx.compose.ui.unit.sp
                 fontSize = 36.sp,
                 lineHeight = 116.sp,
             )
-            Button(onClick = {}) {
+            Button(onClick = {navController.navigate(mooveScreen.Login.name){
+                popUpTo(mooveScreen.Start.name) { inclusive = false }
+            }}) {
                 Text("Consulter les cours")
             }
 
-            Button(onClick = {}) {
+            Button(onClick = {navController.navigate(mooveScreen.Login.name)}) {
                 Text("Se connecter")
             }
+            TextField(
+                value = "",
+                onValueChange = {}
+            )
         }
     }
+
+
 
