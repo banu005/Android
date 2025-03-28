@@ -1,21 +1,16 @@
 package com.example.myapplication
 
-import android.graphics.Color.blue
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,7 +19,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -33,6 +27,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.myapplication.ui.CoursUiState
 
 
 @Composable
@@ -70,22 +65,30 @@ import androidx.navigation.compose.rememberNavController
                 modifier = Modifier
                     .fillMaxSize()
                     .wrapContentSize(Alignment.Center),
-                navController = navController
+                Datasource.retourneListeCours(),
+                navController=navController
             )
         }
 
     }
 }
 
-fun ListeCours(modifier: Modifier, navController: NavHostController) {
-
+@Composable
+fun ListeCours(
+    modifier: Modifier, listeCours: List<CoursUiState>, navController: NavHostController) {
+    LazyColumn(modifier = modifier.fillMaxSize()) {
+        items(listeCours.size) { index -> val cours = listeCours[index]
+            Text(text = cours.nom)
+            Text(text = cours.description)
+        }
+    }
 }
 
 @Composable
 fun FormulaireLogin(modifier: Modifier, navController: NavController) {
     var login by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-//
+
 //    val backgroundColor = if {
 //        login.length >= 10 -> Color.Red
 //        else -> Color.White
@@ -99,7 +102,6 @@ fun FormulaireLogin(modifier: Modifier, navController: NavController) {
                 label = { Text("Entrez votre login") },
                 value = login,
                 onValueChange = { login = it },
-//              colors = TextFieldDefaults.textFieldColors(containerColor = backgroundColor),
             )
         }
             Card() {
@@ -122,7 +124,7 @@ fun FormulaireLogin(modifier: Modifier, navController: NavController) {
         navController: NavHostController = rememberNavController()
     ) {
         val imageModifier = Modifier
-            .size(200.dp)
+            .size(350.dp)
             .clip(RoundedCornerShape(16.dp))
 
         val image = painterResource(R.drawable.logo)
@@ -143,9 +145,9 @@ fun FormulaireLogin(modifier: Modifier, navController: NavController) {
             Text(
                 text = "Bienvenue",
                 fontSize = 16.sp,
-                lineHeight = 36.sp,
+                lineHeight = 40.sp,
             )
-            Button(onClick = {navController.navigate(mooveScreen.Login.name){
+            Button(onClick = {navController.navigate(mooveScreen.AfficherCours.name){
                 popUpTo(mooveScreen.Start.name) { inclusive = false }
             }}) {
                 Text("Consulter les cours")

@@ -1,5 +1,8 @@
 package com.example.myapplication.ui
 
 data class CoursUiState(
-    val nom: String="test"
+    val id: Int,
+    val nom: String,
+    val description: String,
+
 )
