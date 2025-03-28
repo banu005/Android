@@ -144,7 +144,7 @@ fun FormulaireLogin(modifier: Modifier, navController: NavController) {
             )
             Text(
                 text = "Bienvenue",
-                fontSize = 16.sp,
+                fontSize = 20.sp,
                 lineHeight = 40.sp,
             )
             Button(onClick = {navController.navigate(mooveScreen.AfficherCours.name){
