@@ -97,6 +97,11 @@ fun FormulaireLogin(modifier: Modifier, navController: NavController) {
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        Text(
+          text = "Login",
+            fontSize = 36.sp,
+            lineHeight = 50.sp,
+        )
         Card() {
             TextField(
                 label = { Text("Entrez votre login") },
