@@ -40,6 +40,11 @@ android {
 }
 
 dependencies {
+//    implementation(libs.retrofit)
+//    implementation(libs.converter.gson)
+//    implementation(libs.gson)
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")  // Check for the latest version
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")  // If you need Gson converter
     //ajouter dans toml
     implementation(libs.lifecycle.viewmodel.compose)
     //ajouter la library et la version dans le toml

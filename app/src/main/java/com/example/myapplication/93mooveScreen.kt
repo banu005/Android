@@ -19,6 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -28,7 +29,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.ui.CoursUiState
-
 
 @Composable
     fun mooveApp() {
@@ -139,6 +139,7 @@ fun FormulaireLogin(modifier: Modifier, navController: NavController) {
             )
             Text(
                 text = "93 Moove ",
+                color = Color.Blue,
                 fontSize = 36.sp,
                 lineHeight = 50.sp,
             )
