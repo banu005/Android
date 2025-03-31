@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -12,6 +13,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,7 +30,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.myapplication.ui.CoursUiState
+import com.example.myapplication.ui.CoursViewModel
+
 
 @Composable
     fun mooveApp() {
@@ -61,28 +64,60 @@ import com.example.myapplication.ui.CoursUiState
             )
         }
         composable(route = mooveScreen.AfficherCours.name) {
+//            ListeCours(
+//                modifier = Modifier
+//                    .fillMaxSize()
+//                    .wrapContentSize(Alignment.Center),
+//                Datasource.retourneListeCours(),
+//                navController=navController
+//            )
             ListeCours(
                 modifier = Modifier
                     .fillMaxSize()
                     .wrapContentSize(Alignment.Center),
-                Datasource.retourneListeCours(),
-                navController=navController
+//CoursViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+                navController = navController
             )
         }
 
     }
 }
 
+
+
 @Composable
 fun ListeCours(
-    modifier: Modifier, listeCours: List<CoursUiState>, navController: NavHostController) {
-    LazyColumn(modifier = modifier.fillMaxSize()) {
-        items(listeCours.size) { index -> val cours = listeCours[index]
-            Text(text = cours.nom)
-            Text(text = cours.description)
+    modifier: Modifier = Modifier,
+    coursViewModel: CoursViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+    navController: NavHostController = rememberNavController()
+){
+    val listeCours by coursViewModel.coursUi.collectAsState()
+    Column(
+        modifier = modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ){
+        Text(text = "Liste des cours", modifier = Modifier.align(Alignment.CenterHorizontally))
+        LazyColumn {
+            items(listeCours.size) { index ->
+                val cours = listeCours[index]
+            Text(text = "${cours.nom}")
+            Text(text = "${cours.description}")
+        }
         }
     }
 }
+
+//@Composable
+//fun ListeCours(
+//    modifier: Modifier,
+//    listeCours: List<CoursUiState>, navController: NavHostController) {
+//    LazyColumn(modifier = modifier.fillMaxSize()) {
+//        items(listeCours.size) { index -> val cours = listeCours[index]
+//            Text(text = cours.nom)
+//            Text(text = cours.description)
+//        }
+//    }
+//}
 
 @Composable
 fun FormulaireLogin(modifier: Modifier, navController: NavController) {
@@ -129,12 +164,12 @@ fun FormulaireLogin(modifier: Modifier, navController: NavController) {
         navController: NavHostController = rememberNavController()
     ) {
         val imageModifier = Modifier
-            .size(350.dp)
+            .size(250.dp)
             .clip(RoundedCornerShape(16.dp))
 
         val image = painterResource(R.drawable.logo)
         Column(
-//            verticalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ){
             Image(
