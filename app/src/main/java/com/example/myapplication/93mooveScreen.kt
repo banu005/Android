@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.R.attr.offset
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -21,16 +22,24 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.ui.CoursViewModel
+import com.example.myapplication.ui.PokeViewModel
+
 
 
 @Composable
@@ -64,6 +73,24 @@ import com.example.myapplication.ui.CoursViewModel
             )
         }
         composable(route = mooveScreen.AfficherCours.name) {
+            val coursViewModel: CoursViewModel= viewModel()
+            ListeCours(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .wrapContentSize(Alignment.Center),
+                coursViewModel,
+                navController = navController
+            )
+//            ListePokemon(
+//                modifier = Modifier
+//                    .fillMaxSize()
+//                    .wrapContentSize(Alignment.Center),
+////pokeViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+//                navController = navController
+//            )
+        }
+    }
+}
 //            ListeCours(
 //                modifier = Modifier
 //                    .fillMaxSize()
@@ -71,41 +98,34 @@ import com.example.myapplication.ui.CoursViewModel
 //                Datasource.retourneListeCours(),
 //                navController=navController
 //            )
-            ListeCours(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .wrapContentSize(Alignment.Center),
-//CoursViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
-                navController = navController
-            )
-        }
-
-    }
-}
+//
+//        }
 
 
 
-@Composable
-fun ListeCours(
-    modifier: Modifier = Modifier,
-    coursViewModel: CoursViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
-    navController: NavHostController = rememberNavController()
-){
-    val listeCours by coursViewModel.coursUi.collectAsState()
-    Column(
-        modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ){
-        Text(text = "Liste des cours", modifier = Modifier.align(Alignment.CenterHorizontally))
-        LazyColumn {
-            items(listeCours.size) { index ->
-                val cours = listeCours[index]
-            Text(text = "${cours.nom}")
-            Text(text = "${cours.description}")
-        }
-        }
-    }
-}
+
+//@Composable
+//fun ListePokemon(
+//    modifier: Modifier = Modifier,
+//    pokeViewModel: PokeViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+//    navController: NavHostController = rememberNavController()
+//){
+//    val listePokemon by pokeViewModel.pokeUi.collectAsState()
+//    Column(
+//        modifier = modifier.fillMaxSize(),
+//        horizontalAlignment = Alignment.CenterHorizontally
+//    ){
+//        Text(text = "Liste des Pokémon", modifier = Modifier.align(Alignment.CenterHorizontally))
+//        LazyColumn {
+//            items(listePokemon.size) { index ->
+//                val pokemon = listePokemon[index]
+//                Text(text = "${pokemon.name}")
+//            }
+//        }
+//    }
+//}
+
+
 
 //@Composable
 //fun ListeCours(
@@ -119,6 +139,30 @@ fun ListeCours(
 //    }
 //}
 
+    @Composable
+    fun ListeCours(
+        modifier: Modifier = Modifier,
+        coursViewModel: CoursViewModel,
+//        coursViewModel: CoursViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+        navController: NavHostController = rememberNavController()
+    ){
+        val listeCours by coursViewModel.coursUi.collectAsState()
+        Column(
+            modifier = modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ){
+            Text(text = "Liste des cours", modifier = Modifier.align(Alignment.CenterHorizontally),
+                lineHeight =30.sp, fontSize = 26.sp)
+            LazyColumn {
+                items(listeCours.size) { index ->
+                    val cours = listeCours[index]
+                    Text(text = "${cours.nom}")
+                    Text(text = "${cours.description}")
+                }
+            }
+        }
+    }
+
 @Composable
 fun FormulaireLogin(modifier: Modifier, navController: NavController) {
     var login by remember { mutableStateOf("") }
@@ -130,7 +174,7 @@ fun FormulaireLogin(modifier: Modifier, navController: NavController) {
 //    }
     Column(
         modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
           text = "Login",
@@ -157,19 +201,21 @@ fun FormulaireLogin(modifier: Modifier, navController: NavController) {
 
 
 
-
 @Composable
     fun PageAccueil(
         modifier: Modifier = Modifier,
         navController: NavHostController = rememberNavController()
     ) {
         val imageModifier = Modifier
-            .size(250.dp)
-            .clip(RoundedCornerShape(16.dp))
+            .size(500.dp)
+            .clip(RoundedCornerShape(46.dp))
 
         val image = painterResource(R.drawable.logo)
+        val Blue500 = Color( 0xff2196f3)
+        val offset = Offset(5.0f, 10.0f)
+
         Column(
-            verticalArrangement = Arrangement.Center,
+//            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ){
             Image(
@@ -179,26 +225,32 @@ fun FormulaireLogin(modifier: Modifier, navController: NavController) {
             )
             Text(
                 text = "93 Moove ",
-                color = Color.Blue,
-                fontSize = 36.sp,
-                lineHeight = 50.sp,
+//                color = Color.Blue,
+                style = TextStyle(
+                fontSize = 36.sp, lineHeight = 15.sp,
+                shadow = Shadow(
+                    color = Blue500, offset = offset, blurRadius = 1f))
             )
             Text(
                 text = "Bienvenue",
                 fontSize = 20.sp,
-                lineHeight = 40.sp,
+                lineHeight = 50.sp,
+                //mettre en italique
+                fontStyle = FontStyle.Italic,
             )
             Button(onClick = {navController.navigate(mooveScreen.AfficherCours.name){
                 popUpTo(mooveScreen.Start.name) { inclusive = false }
             }}) {
                 Text("Consulter les cours")
             }
-
-            Button(onClick = {navController.navigate(mooveScreen.Login.name)}) {
+            Button(onClick = {navController.navigate(mooveScreen.Login.name) {
+                popUpTo(mooveScreen.Start.name) { inclusive = false }
+            }}) {
                 Text("Se connecter")
             }
         }
     }
+
 
 
 

@@ -8,18 +8,15 @@ import retrofit2.http.GET
 
 
 private const val BASE_URL =
-    "http://coursapi.co/api/v2/"
-
+    "http://10.0.2.2:8080/"
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create())
     .baseUrl(BASE_URL)
     .build()
-
 interface CoursApiService {
-    @GET("cours/?limit=10")
+    @GET("cours")
     suspend fun getCoursList(): List<CoursResult>
 }
-
 object CoursApi {
     val retrofitService : CoursApiService by lazy {
         retrofit.create(CoursApiService::class.java)

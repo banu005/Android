@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapplication.service.CoursApi
+import com.example.myapplication.service.PokeApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -44,3 +45,22 @@ class CoursViewModel : ViewModel() {
     }
 }
 
+//class CoursViewModel : ViewModel() {
+//    private val _coursUi = MutableStateFlow<List<CoursUiState>>(emptyList())
+//    val coursUi: StateFlow<List<CoursUiState>> = _coursUi
+//    init {
+//        getCoursNames()
+//    }
+//    fun getCoursNames() {
+//        viewModelScope.launch {
+//            val response = CoursApi.retrofitService.getCoursList()
+//            _coursUi.value = response.results.map { cours ->
+//                CoursUiState(
+//                    id = cours.id,
+//                    nom = cours.nom,
+//                    description = cours.description
+//                )
+//            }
+//        }
+//    }
+//}
