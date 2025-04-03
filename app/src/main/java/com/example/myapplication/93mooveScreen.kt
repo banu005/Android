@@ -149,13 +149,14 @@ import com.example.myapplication.ui.PokeViewModel
         val listeCours by coursViewModel.coursUi.collectAsState()
         Column(
             modifier = modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ){
             Text(text = "Liste des cours", modifier = Modifier.align(Alignment.CenterHorizontally),
                 lineHeight =30.sp, fontSize = 26.sp)
             LazyColumn {
                 items(listeCours.size) { index ->
                     val cours = listeCours[index]
+                    Text(text = "${cours.id}")
                     Text(text = "${cours.nom}")
                     Text(text = "${cours.description}")
                 }
