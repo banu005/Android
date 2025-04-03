@@ -146,13 +146,19 @@ import com.example.myapplication.ui.PokeViewModel
 //        coursViewModel: CoursViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
         navController: NavHostController = rememberNavController()
     ){
+        val Blue500 = Color( 0xff2196f3)
+        val offset = Offset(5.0f, 10.0f)
         val listeCours by coursViewModel.coursUi.collectAsState()
         Column(
             modifier = modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ){
-            Text(text = "Liste des cours", modifier = Modifier.align(Alignment.CenterHorizontally),
-                lineHeight =30.sp, fontSize = 26.sp)
+            Text(text = "Liste des cours",
+                style = TextStyle(
+                    fontSize = 26.sp, lineHeight = 30.sp,
+                    shadow = Shadow(
+                        color = Blue500, offset = offset, blurRadius = 1f)),
+                        modifier = Modifier.align(Alignment.CenterHorizontally))
             LazyColumn {
                 items(listeCours.size) { index ->
                     val cours = listeCours[index]
@@ -168,6 +174,8 @@ import com.example.myapplication.ui.PokeViewModel
 fun FormulaireLogin(modifier: Modifier, navController: NavController) {
     var login by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    val Blue500 = Color( 0xff2196f3)
+    val offset = Offset(5.0f, 10.0f)
 
 //    val backgroundColor = if {
 //        login.length >= 10 -> Color.Red
@@ -179,23 +187,26 @@ fun FormulaireLogin(modifier: Modifier, navController: NavController) {
     ) {
         Text(
           text = "Login",
-            fontSize = 36.sp,
-            lineHeight = 50.sp,
+            style = TextStyle(
+                fontSize = 36.sp, lineHeight = 15.sp,
+                shadow = Shadow(
+                    color = Blue500, offset = offset, blurRadius = 1f))
         )
         Card() {
             TextField(
-                label = { Text("Entrez votre login") },
+                label = { Text("Entrez votre identifiant") },
                 value = login,
                 onValueChange = { login = it },
             )
         }
-            Card() {
-                TextField(
-                    label = { Text("Entrez votre mot de passe") },
-                    value = password,
-                    onValueChange = { password = it }
-                )
+        Card(){
+            TextField(
+                label = { Text("Entrez votre mot de passe") },
+                value = password,
+                onValueChange = { password = it }
+            )
             }
+
         }
     }
 
